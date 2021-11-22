@@ -3,6 +3,7 @@ from pprint import pprint
 
 languages = ["python", "java", "C"]
 
+
 headers = {
     "User-Agent": "api-test-agent"
 }
@@ -18,7 +19,7 @@ def count_vacancies_found(vacancies):
     return vacancies["found"]
 
 
-def count_average_salary(vacancies):
+def count_average_salary_and_processed_vacancies(vacancies):
     salaries = []
     for vacancy in vacancies["items"]:
         salary = predict_rub_salary(vacancy)
@@ -40,10 +41,12 @@ def predict_rub_salary(vacancy):
     return None
 
 
-def get_vacancies_hh(language):
+def get_vacancies_hh(language, page):
     payload = {
         "text": f"{language}",
-        "area": "1",
+        "area": 1,
+        "per_page": 100,
+        "page": f"{page}"
     }
     url = f"https://api.hh.ru/vacancies/"
     response = requests.get(url, headers=headers, params=payload)
@@ -54,16 +57,27 @@ def get_vacancies_hh(language):
 
 def main():
     vacancies_hh = {}
+    total_pages = 5
+    total_average_salary = 0
+    total_vacancies_processed = 0
+    pages = range(total_pages)
+
     for language in languages:
-        vacancies = get_vacancies_hh(language)
-        average_salary, vacancies_processed = count_average_salary(vacancies)
-        vacancies_found = count_vacancies_found(vacancies)
-        vacancies_hh.update({
+        for page in pages:
+            vacancies = get_vacancies_hh(language, page)
+            vacancies_found = count_vacancies_found(vacancies)
+            average_salary, vacancies_processed = count_average_salary_and_processed_vacancies(vacancies)
+
+            total_average_salary += average_salary
+            total_vacancies_processed += vacancies_processed
+
+            vacancies_hh.update({
             language: {
                 "vacancies_found": vacancies_found,
-                "vacancies_processed": vacancies_processed,
-                "average_salary": average_salary, }
+                "vacancies_processed": total_vacancies_processed,
+                "average_salary": int(total_average_salary/total_pages)}
         })
 
     print(vacancies_hh)
+
 main()
