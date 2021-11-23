@@ -1,5 +1,4 @@
 import requests
-from pprint import pprint
 
 languages = ["python", "java", "C"]
 
@@ -22,13 +21,13 @@ def count_vacancies_found(vacancies):
 def count_average_salary_and_processed_vacancies(vacancies):
     salaries = []
     for vacancy in vacancies["items"]:
-        salary = predict_rub_salary(vacancy)
+        salary = predict_rub_salary_hh(vacancy)
         if salary:
             salaries.append(int(salary))
     return int(sum(salaries) / len(salaries)), len(salaries)
 
 
-def predict_rub_salary(vacancy):
+def predict_rub_salary_hh(vacancy):
     if vacancy["salary"] and vacancy["salary"]["currency"] == "RUR":
         min_salary = vacancy["salary"]["from"]
         max_salary = vacancy["salary"]["to"]
