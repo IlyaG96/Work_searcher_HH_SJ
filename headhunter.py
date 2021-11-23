@@ -89,6 +89,7 @@ def main():
                 "average_salary": int(total_average_salary/total_pages)}
         })
 
-    pprint(vacancies_hh)
+#    pprint(vacancies_hh)
+    return vacancies_hh
 
-# main()
+#main()

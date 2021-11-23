@@ -1,29 +1,9 @@
-import terminaltables
-from terminaltables import AsciiTable, DoubleTable, SingleTable
+from terminaltables import AsciiTable
+from headhunter import main
 
-"""{'C': {'average_salary': 190334,
-       'vacancies_found': 13572,
-       'vacancies_processed': 314},
- 'java': {'average_salary': 265234,
-          'vacancies_found': 5231,
-          'vacancies_processed': 248},
- 'python': {'average_salary': 210452,
-            'vacancies_found': 6997,
-            'vacancies_processed': 201}}"""
+vacancies_data = main()
 
-"""
-{'C': {'average_salary': 153897,
-       'vacancies_found': 41,
-       'vacancies_processed': 34},
- 'java': {'average_salary': 221987,
-          'vacancies_found': 62,
-          'vacancies_processed': 39},
- 'python': {'average_salary': 133637,
-            'vacancies_found': 72,
-            'vacancies_processed': 58}}
-"""
-
-table_data = [{'C': {'average_salary': 153897,
+"""vacancies_data = {'C': {'average_salary': 153897,
                     'vacancies_found': 41,
                     'vacancies_processed': 34},
               'java': {'average_salary': 221987,
@@ -31,11 +11,14 @@ table_data = [{'C': {'average_salary': 153897,
                        'vacancies_processed': 39},
               'python': {'average_salary': 133637,
                          'vacancies_found': 72,
-                         'vacancies_processed': 58}}]
+                         'vacancies_processed': 58}}"""
 
+table_data = [["Язык программирования", "Средняя зарплата", "Вакансий обработано", "Вакансий найдено"]]
 title = "HeadHunter, Moscow"
+for language, params in vacancies_data.items():
+    stat = list(params.values())
+    stat.append(language)
+    table_data.append(list(reversed(stat)))
 
 table_instance = AsciiTable(table_data, title)
-table_instance.justify_columns[2] = 'right'
-
 print(table_instance.table)
