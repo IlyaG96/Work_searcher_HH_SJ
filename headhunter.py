@@ -1,7 +1,19 @@
 import requests
+from pprint import pprint
 
 languages = ["python", "java", "C"]
 
+
+
+"""{'C': {'average_salary': 190334,
+       'vacancies_found': 13572,
+       'vacancies_processed': 314},
+ 'java': {'average_salary': 265234,
+          'vacancies_found': 5231,
+          'vacancies_processed': 248},
+ 'python': {'average_salary': 210452,
+            'vacancies_found': 6997,
+            'vacancies_processed': 201}}"""
 
 headers = {
     "User-Agent": "api-test-agent"
@@ -23,7 +35,7 @@ def count_average_salary_and_processed_vacancies(vacancies):
     for vacancy in vacancies["items"]:
         salary = predict_rub_salary_hh(vacancy)
         if salary:
-            salaries.append(int(salary))
+            salaries.append(salary)
     return int(sum(salaries) / len(salaries)), len(salaries)
 
 
@@ -47,7 +59,7 @@ def get_vacancies_hh(language, page):
         "per_page": 100,
         "page": f"{page}"
     }
-    url = f"https://api.hh.ru/vacancies/"
+    url = "https://api.hh.ru/vacancies/"
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
     vacancies = response.json()
@@ -57,11 +69,11 @@ def get_vacancies_hh(language, page):
 def main():
     vacancies_hh = {}
     total_pages = 5
-    total_average_salary = 0
-    total_vacancies_processed = 0
     pages = range(total_pages)
 
     for language in languages:
+        total_average_salary = 0
+        total_vacancies_processed = 0
         for page in pages:
             vacancies = get_vacancies_hh(language, page)
             vacancies_found = count_vacancies_found(vacancies)
@@ -77,6 +89,6 @@ def main():
                 "average_salary": int(total_average_salary/total_pages)}
         })
 
-    print(vacancies_hh)
+    pprint(vacancies_hh)
 
-main()
+# main()
