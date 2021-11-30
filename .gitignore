@@ -4,3 +4,4 @@ testcase
 .env
 env
 testcase.py
+__pycache__

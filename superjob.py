@@ -1,5 +1,3 @@
-import time
-
 import requests
 
 
@@ -30,7 +28,7 @@ def get_response_sj(language, sjob_token):
         "X-Api-App-Id": sjob_token,
     }
     payload = {
-        "count": 10,
+        "count": 20,
         "page": 1,
         "town": "Москва",
         "keyword": f"Программист {language}"
