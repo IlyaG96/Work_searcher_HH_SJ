@@ -34,7 +34,7 @@ def get_vacancies_hh(language, page):
     payload = {
         "text": f"{language}",
         "area": 1,
-        "per_page": 99,
+        "per_page": 100,
         "page": f"{page}"
     }
     url = "https://api.hh.ru/vacancies/"

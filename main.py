@@ -6,7 +6,7 @@ import os
 
 
 def main():
-    languages = ["Python", "Java", "C", "PHP"]
+    languages = ["Python", "Java", "C", "PHP", "C#", "Go"]
     load_dotenv()
     sjob_token = os.getenv("SJOB_TOKEN")
     table_headers = [["Язык программирования", "Средняя зарплата", "Вакансий обработано", "Вакансий найдено"]]
