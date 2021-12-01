@@ -34,7 +34,7 @@ $ python main.py
 ```
 Программа получит данные по вакансиям с сайтов hh.ru и superjob.ru и представит их в виде таблицы:
 
-![](https://disk.yandex.ru/i/3JKoJ2tHPQgYLA)
+![](https://downloader.disk.yandex.ru/preview/9d7cb2350e69a64ce5b5bd38653befebab22977d3497486ccdd7d42b41dffa0a/61a70313/aiK_p35wptpfeBleZFkIbcGTbmx8tm2WQyXkxReSpPUATwBE7osJB0J4Akycf2TJJHynJtbni52cRJjF8j4nzA%3D%3D?uid=0&filename=%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202021-12-01%20%D0%B2%2012.03.22.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=512x512)
 
 ### headhunter.py
 Содержит логику для работы с API headhunter
