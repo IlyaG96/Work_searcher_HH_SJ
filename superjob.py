@@ -28,16 +28,15 @@ def get_response_sj(language, sjob_token):
         "X-Api-App-Id": sjob_token,
     }
     payload = {
-        "count": 20,
+        "count": 40,
         "page": 1,
         "town": "Москва",
-        "keyword": f"Программист {language}"
+        "keyword": f"{language}"
     }
     url = "https://api.superjob.ru/2.0/vacancies/"
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
     sj_response = response.json()
-
     return sj_response
 
 
