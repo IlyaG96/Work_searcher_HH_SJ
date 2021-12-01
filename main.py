@@ -11,7 +11,6 @@ def main():
     load_dotenv()
     sjob_token = os.getenv("SJOB_TOKEN")
     languages = os.getenv("LANGUAGES").split()
-    print(languages)
     table_headers = [["Язык программирования", "Средняя зарплата", "Вакансий обработано", "Вакансий найдено"]]
     table_titles = ["SuperJob, Moscow", "HeadHunter, Moscow"]
     try:
