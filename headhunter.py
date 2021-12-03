@@ -27,7 +27,6 @@ def get_vacancies_hh(language, page):
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
     vacancies = response.json()
-    pprint(vacancies)
     return vacancies
 
 
