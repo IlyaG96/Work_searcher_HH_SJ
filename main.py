@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 import os
 
 
-def fetch_vacancies(languages):
+def fetch_vacancies(languages, sjob_token):
     try:
         vacancies = [
-   #         generate_vacancies_data_sj(languages, sjob_token),
+            generate_vacancies_data_sj(languages, sjob_token),
             generate_vacancies_data_hh(languages)
         ]
     except ZeroDivisionError:
@@ -34,11 +34,11 @@ def print_table(vacancies, table_headers, table_titles):
 
 def main():
     load_dotenv()
-    #   sjob_token = os.getenv("SJOB_TOKEN")
+    sjob_token = os.getenv("SJOB_TOKEN")
     languages = os.getenv("LANGUAGES").split()
     table_headers = [["Язык программирования", "Вакансий обработано", "Вакансий найдено", "Средняя зарплата"]]
-    table_titles = ["HeadHunter, Moscow"] #,"SuperJob, Moscow", ]
-    vacancies = fetch_vacancies(languages)
+    table_titles = ["SuperJob, Moscow", "HeadHunter, Moscow"]
+    vacancies = fetch_vacancies(languages, sjob_token)
     print_table(vacancies, table_headers, table_titles)
 
 
