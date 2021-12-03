@@ -1,26 +1,32 @@
+import os
 import sys
-
+from dotenv import load_dotenv
 from terminaltables import AsciiTable
 from superjob import generate_vacancies_data_sj
 from headhunter import generate_vacancies_data_hh
-from dotenv import load_dotenv
-import os
 
 
-def fetch_vacancies(languages, sjob_token):
+def fetch_vacancies(languages: list,
+                    sjob_token: str
+                    ):
+
     try:
         vacancies = [
             generate_vacancies_data_sj(languages, sjob_token),
             generate_vacancies_data_hh(languages)
         ]
     except ZeroDivisionError:
-        sys.exit("Попробуйте чуть позже или уменьшите количество языков в .env Ошибка может быть"
+        sys.exit("Попробуйте чуть позже или уменьшите количество языков в .env. Ошибка может быть"
                  " связана с ограничением на количество запросов сайта superjob.ru")
 
     return vacancies
 
 
-def print_table(vacancies, table_headers, table_titles):
+def print_table(vacancies: list,
+                table_headers: list,
+                table_titles: list
+                ):
+
     for num, vacancies_data in enumerate(vacancies):
         table_data = table_headers[:]
         for language, params in vacancies_data.items():
@@ -30,7 +36,9 @@ def print_table(vacancies, table_headers, table_titles):
         table_instance = AsciiTable(table_data, table_titles[num])
         print(table_instance.table)
 
+
 def main():
+
     load_dotenv()
     sjob_token = os.getenv("SJOB_TOKEN")
     languages = os.getenv("LANGUAGES").split()

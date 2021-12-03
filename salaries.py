@@ -1,4 +1,5 @@
-def predict_rub_salary_hh(vacancy):
+def predict_rub_salary_hh(vacancy: dict):
+
     if vacancy["salary"] and vacancy["salary"]["currency"] == "RUR":
         min_salary = vacancy["salary"]["from"]
         max_salary = vacancy["salary"]["to"]
@@ -7,7 +8,8 @@ def predict_rub_salary_hh(vacancy):
     return None
 
 
-def predict_rub_salary_sj(vacancy):
+def predict_rub_salary_sj(vacancy: dict):
+
     min_salary = vacancy["payment_from"]
     max_salary = vacancy["payment_to"]
     if not vacancy["currency"] == "rub" or not (min_salary or max_salary):
@@ -17,7 +19,10 @@ def predict_rub_salary_sj(vacancy):
         return salary
 
 
-def predict_salary(salary_from, salary_to):
+def predict_salary(salary_from: int,
+                   salary_to: int
+                   ):
+
     if not salary_from:
         return salary_to*0.8
     elif not salary_to:

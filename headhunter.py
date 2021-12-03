@@ -3,8 +3,10 @@ from salaries import predict_rub_salary_hh
 from itertools import count
 
 
-def count_average_salary_and_processed_vacancies(vacancies):
+def count_average_salary_and_processed_vacancies(vacancies: dict):
+
     salaries = []
+
     for vacancy in vacancies["items"]:
         salary = predict_rub_salary_hh(vacancy)
         if salary:
@@ -12,7 +14,10 @@ def count_average_salary_and_processed_vacancies(vacancies):
     return sum(salaries), len(salaries)
 
 
-def get_vacancies_hh(language, page):
+def get_vacancies_hh(language: str,
+                     page: int
+                     ):
+
     headers = {
         "User-Agent": "api-test-agent"
     }
@@ -23,13 +28,15 @@ def get_vacancies_hh(language, page):
         "page": f"{page}"
     }
     url = "https://api.hh.ru/vacancies/"
+
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
     vacancies = response.json()
     return vacancies
 
 
-def generate_vacancies_data_hh(languages):
+def generate_vacancies_data_hh(languages: list):
+
     vacancies_hh = {}
 
     for language in languages:
@@ -52,4 +59,5 @@ def generate_vacancies_data_hh(languages):
             })
             if page >= total_pages-1:
                 break
+
     return vacancies_hh

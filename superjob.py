@@ -1,10 +1,10 @@
 import requests
 from salaries import predict_rub_salary_sj
 from itertools import count
-from pprint import pprint
 
 
-def count_average_salary_and_processed_vacancies(vacancies):
+def count_average_salary_and_processed_vacancies(vacancies: list):
+
     salaries = []
     for number, vacancy in enumerate(vacancies):
         salary = predict_rub_salary_sj(vacancy)
@@ -13,7 +13,11 @@ def count_average_salary_and_processed_vacancies(vacancies):
     return sum(salaries), len(salaries)
 
 
-def get_response_sj(language, sjob_token, page):
+def get_response_sj(language: str,
+                    sjob_token: str,
+                    page: int
+                    ):
+
     headers = {
         "X-Api-App-Id": sjob_token,
     }
@@ -24,17 +28,22 @@ def get_response_sj(language, sjob_token, page):
         "keyword": f"{language}"
     }
     url = "https://api.superjob.ru/2.0/vacancies/"
+
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
     sj_response = response.json()
     return sj_response
 
 
-def get_vacancies_sj(sj_response):
+def get_vacancies_sj(sj_response: dict):
+
     return sj_response["objects"]
 
 
-def generate_vacancies_data_sj(languages, sjob_token):
+def generate_vacancies_data_sj(languages: list,
+                               sjob_token: str
+                               ):
+
     vacancies_sj = {}
     for language in languages:
         total_average_salary = 0
