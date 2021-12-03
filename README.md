@@ -24,7 +24,7 @@ $ pip install -r requirements.txt
 
 ```bash
 SJOB_TOKEN=Токен Вашего приложения на сайте SuperJob
-LANGUAGES=Python Java C PHP C# Go
+LANGUAGES='Python Java C PHP C# Go'
 ```
 Переменная `LANGUAGES` содержит список языков, для которых будет найдена средняя зарплата. Запятые ставить не надо. Только пробелы
 
