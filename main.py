@@ -29,8 +29,6 @@ def print_table(vacancies, table_headers, table_titles):
             table_data.append(stat)
         table_instance = AsciiTable(table_data, table_titles[num])
         print(table_instance.table)
-        table_data.clear()
-
 
 def main():
     load_dotenv()
