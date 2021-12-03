@@ -25,8 +25,8 @@ def print_table(vacancies, table_headers, table_titles):
         table_data = table_headers[:]
         for language, params in vacancies_data.items():
             stat = list(params.values())
-            stat.append(language)
-            table_data.append(list(reversed(stat)))
+            stat.insert(0, language)
+            table_data.append(stat)
         table_instance = AsciiTable(table_data, table_titles[num])
         print(table_instance.table)
         table_data.clear()
@@ -36,8 +36,8 @@ def main():
     load_dotenv()
     #   sjob_token = os.getenv("SJOB_TOKEN")
     languages = os.getenv("LANGUAGES").split()
-    table_headers = [["Язык программирования", "Средняя зарплата", "Вакансий обработано", "Вакансий найдено"]]
-    table_titles = ["SuperJob, Moscow", "HeadHunter, Moscow"]
+    table_headers = [["Язык программирования", "Вакансий обработано", "Вакансий найдено", "Средняя зарплата"]]
+    table_titles = ["HeadHunter, Moscow"] #,"SuperJob, Moscow", ]
     vacancies = fetch_vacancies(languages)
     print_table(vacancies, table_headers, table_titles)
 

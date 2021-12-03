@@ -46,7 +46,7 @@ def get_vacancies_hh(language, page):
 
 def generate_vacancies_data_hh(languages):
     vacancies_hh = {}
-    total_pages = 3
+    total_pages = 1
     pages = range(total_pages)
 
     for language in languages:
