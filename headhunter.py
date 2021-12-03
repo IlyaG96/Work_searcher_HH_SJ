@@ -1,4 +1,5 @@
 import requests
+from salaries import predict_rub_salary_hh
 
 
 def count_vacancies_found(vacancies):
@@ -14,17 +15,7 @@ def count_average_salary_and_processed_vacancies(vacancies):
     return int(sum(salaries) / len(salaries)), len(salaries)
 
 
-def predict_rub_salary_hh(vacancy):
-    if vacancy["salary"] and vacancy["salary"]["currency"] == "RUR":
-        min_salary = vacancy["salary"]["from"]
-        max_salary = vacancy["salary"]["to"]
-        if not min_salary:
-            return max_salary
-        elif not max_salary:
-            return min_salary
-        else:
-            return (min_salary + max_salary) / 2
-    return None
+
 
 
 def get_vacancies_hh(language, page):

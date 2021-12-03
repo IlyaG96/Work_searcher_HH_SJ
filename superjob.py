@@ -1,4 +1,5 @@
 import requests
+from salaries import predict_rub_salary_sj
 
 
 def count_average_salary_and_processed_vacancies(vacancies):
@@ -8,19 +9,6 @@ def count_average_salary_and_processed_vacancies(vacancies):
         if salary:
             salaries.append(salary)
     return int(sum(salaries) / len(salaries)), len(salaries)
-
-
-def predict_rub_salary_sj(vacancy):
-    min_salary = vacancy["payment_from"]
-    max_salary = vacancy["payment_to"]
-    if not vacancy["currency"] == "rub" or not (min_salary or max_salary):
-        return None
-    elif not min_salary:
-        return max_salary
-    elif not max_salary:
-        return min_salary
-    else:
-        return (min_salary + max_salary) / 2
 
 
 def get_response_sj(language, sjob_token):
