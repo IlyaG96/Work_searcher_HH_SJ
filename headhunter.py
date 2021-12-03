@@ -1,6 +1,5 @@
 import requests
 from salaries import predict_rub_salary_hh
-from pprint import pprint
 from itertools import count
 
 
@@ -10,7 +9,7 @@ def count_average_salary_and_processed_vacancies(vacancies):
         salary = predict_rub_salary_hh(vacancy)
         if salary:
             salaries.append(salary)
-    return int(sum(salaries) / len(salaries)), len(salaries)
+    return sum(salaries), len(salaries)
 
 
 def get_vacancies_hh(language, page):
@@ -49,7 +48,7 @@ def generate_vacancies_data_hh(languages):
                 language: {
                     "vacancies_found": vacancies_found,
                     "vacancies_processed": total_vacancies_processed,
-                    "average_salary": int(total_average_salary/total_pages)}
+                    "average_salary": int(total_average_salary/total_vacancies_processed)}
             })
             if page >= total_pages-1:
                 break
