@@ -35,11 +35,6 @@ def get_response_sj(language: str,
     return sj_response
 
 
-def get_vacancies_sj(sj_response: dict):
-
-    return sj_response["objects"]
-
-
 def generate_vacancies_data_sj(languages: list,
                                sjob_token: str
                                ):
@@ -51,7 +46,7 @@ def generate_vacancies_data_sj(languages: list,
         for page in count():
             sj_response = get_response_sj(language, sjob_token, page)
             more_vacancies = sj_response["more"]
-            vacancies = get_vacancies_sj(sj_response)
+            vacancies = sj_response["objects"]
             vacancies_found = sj_response["total"]
 
             average_salary, processed_vacancies = count_average_salary_and_processed_vacancies(vacancies)
