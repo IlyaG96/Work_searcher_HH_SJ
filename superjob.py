@@ -34,7 +34,7 @@ def get_response_sj(language: str, sjob_token: str, page: int):
 
 def process_sj_vacancies(languages: list, sjob_token: str):
 
-    vacancies = {}
+    vacancies_payments = {}
     for language in languages:
         total_average_salary = 0
         total_vacancies_processed = 0
@@ -49,7 +49,7 @@ def process_sj_vacancies(languages: list, sjob_token: str):
             total_average_salary += average_salary
             total_vacancies_processed += processed_vacancies
 
-            vacancies.update({
+            vacancies_payments.update({
                 language: {
                     "vacancies_found": vacancies_found,
                     "vacancies_processed": total_vacancies_processed,
@@ -58,4 +58,4 @@ def process_sj_vacancies(languages: list, sjob_token: str):
             if not more_vacancies:
                 break
 
-    return vacancies
+    return vacancies_payments

@@ -35,7 +35,7 @@ def get_vacancies_hh(language: str, page: int):
 
 def process_hh_vacancies(languages: list):
 
-    vacancies = {}
+    vacancies_payments = {}
 
     for language in languages:
         total_average_salary = 0
@@ -49,7 +49,7 @@ def process_hh_vacancies(languages: list):
             total_average_salary += average_salary
             total_vacancies_processed += vacancies_processed
 
-            vacancies.update({
+            vacancies_payments.update({
                 language: {
                     "vacancies_found": vacancies_found,
                     "vacancies_processed": total_vacancies_processed,
@@ -58,4 +58,4 @@ def process_hh_vacancies(languages: list):
             if page >= total_pages-1:
                 break
 
-    return vacancies
+    return vacancies_payments
