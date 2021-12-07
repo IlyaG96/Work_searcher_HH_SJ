@@ -20,10 +20,10 @@ def get_vacancies_hh(language: str, page: int):
         "User-Agent": "api-test-agent"
     }
     payload = {
-        "text": f"{language}",
+        "text": language,
         "area": 1,
         "per_page": 100,
-        "page": f"{page}"
+        "page": page
     }
     url = "https://api.hh.ru/vacancies/"
 

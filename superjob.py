@@ -6,7 +6,7 @@ from itertools import count
 def count_average_salary_and_processed_vacancies(vacancies: list):
 
     salaries = []
-    for number, vacancy in enumerate(vacancies):
+    for vacancy in vacancies:
         salary = predict_rub_salary_sj(vacancy)
         if salary:
             salaries.append(salary)
@@ -22,7 +22,7 @@ def get_response_sj(language: str, sjob_token: str, page: int):
         "count": 100,
         "page": page,
         "town": "Москва",
-        "keyword": f"{language}"
+        "keyword": language
     }
     url = "https://api.superjob.ru/2.0/vacancies/"
 
