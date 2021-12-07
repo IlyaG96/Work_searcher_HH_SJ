@@ -1,5 +1,5 @@
 # Work_searcher_HH_SJ
-Скрипт для поиска средней зарплаты программистов на сайтах [hh.ru](hh.ru) и [superjob.ru](superjob.ru)
+Скрипт для поиска средней зарплаты программистов на сайтах [hh.ru](https://hh.ru) и [superjob.ru](https://www.superjob.ru)
 ## Установка
 Вам понадобится установленный Python 3.6-3.9 и git.
 
