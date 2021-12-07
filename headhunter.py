@@ -1,17 +1,6 @@
 import requests
-from salaries import predict_rub_salary_hh
+from salaries import predict_rub_salary_hh, count_sum_salary_and_processed_vacancies
 from itertools import count
-
-
-def count_average_salary_and_processed_vacancies(vacancies: dict):
-
-    salaries = []
-
-    for vacancy in vacancies["items"]:
-        salary = predict_rub_salary_hh(vacancy)
-        if salary:
-            salaries.append(salary)
-    return sum(salaries), len(salaries)
 
 
 def get_vacancies_hh(language: str, page: int):
@@ -38,24 +27,27 @@ def process_hh_vacancies(languages: list):
     vacancies_payments = {}
 
     for language in languages:
-        total_average_salary = 0
+        total_sum_salary = 0
         total_vacancies_processed = 0
         for page in count():
-            vacancies = get_vacancies_hh(language, page)
-            vacancies_found = vacancies["found"]
-            total_pages = vacancies["pages"]
-            average_salary, vacancies_processed = count_average_salary_and_processed_vacancies(vacancies)
+            hh_response = get_vacancies_hh(language, page)
+            vacancies = hh_response.get("items")
+            vacancies_found = hh_response.get("found")
+            total_pages = hh_response.get("pages")
+            sum_salary, vacancies_processed = \
+                count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_hh)
 
-            total_average_salary += average_salary
+            total_sum_salary += sum_salary
             total_vacancies_processed += vacancies_processed
 
-            vacancies_payments.update({
-                language: {
-                    "vacancies_found": vacancies_found,
-                    "vacancies_processed": total_vacancies_processed,
-                    "average_salary": int(total_average_salary/total_vacancies_processed)}
-            })
             if page >= total_pages-1:
                 break
+
+        vacancies_payments.update({
+            language: {
+                "vacancies_found": vacancies_found,
+                "vacancies_processed": total_vacancies_processed,
+                "average_salary": int(total_sum_salary/total_vacancies_processed)}
+        })
 
     return vacancies_payments

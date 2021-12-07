@@ -1,16 +1,6 @@
 import requests
-from salaries import predict_rub_salary_sj
+from salaries import predict_rub_salary_sj, count_sum_salary_and_processed_vacancies
 from itertools import count
-
-
-def count_average_salary_and_processed_vacancies(vacancies: list):
-
-    salaries = []
-    for vacancy in vacancies:
-        salary = predict_rub_salary_sj(vacancy)
-        if salary:
-            salaries.append(salary)
-    return sum(salaries), len(salaries)
 
 
 def get_response_sj(language: str, sjob_token: str, page: int):
@@ -36,7 +26,7 @@ def process_sj_vacancies(languages: list, sjob_token: str):
 
     vacancies_payments = {}
     for language in languages:
-        total_average_salary = 0
+        total_sum_salary = 0
         total_vacancies_processed = 0
         for page in count():
             sj_response = get_response_sj(language, sjob_token, page)
@@ -44,18 +34,20 @@ def process_sj_vacancies(languages: list, sjob_token: str):
             vacancies = sj_response["objects"]
             vacancies_found = sj_response["total"]
 
-            average_salary, processed_vacancies = count_average_salary_and_processed_vacancies(vacancies)
+            sum_salary, processed_vacancies =\
+                count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_sj)
 
-            total_average_salary += average_salary
+            total_sum_salary += sum_salary
             total_vacancies_processed += processed_vacancies
 
-            vacancies_payments.update({
-                language: {
-                    "vacancies_found": vacancies_found,
-                    "vacancies_processed": total_vacancies_processed,
-                    "average_salary": int(total_average_salary/total_vacancies_processed)}
-            })
             if not more_vacancies:
                 break
+
+        vacancies_payments.update({
+            language: {
+                "vacancies_found": vacancies_found,
+                "vacancies_processed": total_vacancies_processed,
+                "average_salary": int(total_sum_salary/total_vacancies_processed)}
+        })
 
     return vacancies_payments
