@@ -19,9 +19,7 @@ def predict_rub_salary_sj(vacancy: dict):
         return salary
 
 
-def predict_salary(salary_from: int,
-                   salary_to: int
-                   ):
+def predict_salary(salary_from: int, salary_to: int):
 
     if not salary_from:
         return salary_to*0.8

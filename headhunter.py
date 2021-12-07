@@ -14,9 +14,7 @@ def count_average_salary_and_processed_vacancies(vacancies: dict):
     return sum(salaries), len(salaries)
 
 
-def get_vacancies_hh(language: str,
-                     page: int
-                     ):
+def get_vacancies_hh(language: str, page: int):
 
     headers = {
         "User-Agent": "api-test-agent"
@@ -35,9 +33,9 @@ def get_vacancies_hh(language: str,
     return vacancies
 
 
-def generate_vacancies_data_hh(languages: list):
+def process_hh_vacancies(languages: list):
 
-    vacancies_hh = {}
+    vacancies = {}
 
     for language in languages:
         total_average_salary = 0
@@ -51,7 +49,7 @@ def generate_vacancies_data_hh(languages: list):
             total_average_salary += average_salary
             total_vacancies_processed += vacancies_processed
 
-            vacancies_hh.update({
+            vacancies.update({
                 language: {
                     "vacancies_found": vacancies_found,
                     "vacancies_processed": total_vacancies_processed,
@@ -60,4 +58,4 @@ def generate_vacancies_data_hh(languages: list):
             if page >= total_pages-1:
                 break
 
-    return vacancies_hh
+    return vacancies

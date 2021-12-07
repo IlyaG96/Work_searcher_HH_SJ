@@ -13,10 +13,7 @@ def count_average_salary_and_processed_vacancies(vacancies: list):
     return sum(salaries), len(salaries)
 
 
-def get_response_sj(language: str,
-                    sjob_token: str,
-                    page: int
-                    ):
+def get_response_sj(language: str, sjob_token: str, page: int):
 
     headers = {
         "X-Api-App-Id": sjob_token,
@@ -35,11 +32,9 @@ def get_response_sj(language: str,
     return sj_response
 
 
-def generate_vacancies_data_sj(languages: list,
-                               sjob_token: str
-                               ):
+def process_sj_vacancies(languages: list, sjob_token: str):
 
-    vacancies_sj = {}
+    vacancies = {}
     for language in languages:
         total_average_salary = 0
         total_vacancies_processed = 0
@@ -54,7 +49,7 @@ def generate_vacancies_data_sj(languages: list,
             total_average_salary += average_salary
             total_vacancies_processed += processed_vacancies
 
-            vacancies_sj.update({
+            vacancies.update({
                 language: {
                     "vacancies_found": vacancies_found,
                     "vacancies_processed": total_vacancies_processed,
@@ -63,4 +58,4 @@ def generate_vacancies_data_sj(languages: list,
             if not more_vacancies:
                 break
 
-    return vacancies_sj
+    return vacancies
