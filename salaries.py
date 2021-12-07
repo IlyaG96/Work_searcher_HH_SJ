@@ -14,9 +14,8 @@ def predict_rub_salary_sj(vacancy: dict):
     max_salary = vacancy["payment_to"]
     if not vacancy["currency"] == "rub" or not (min_salary or max_salary):
         return None
-    else:
-        salary = predict_salary(min_salary, max_salary)
-        return salary
+    salary = predict_salary(min_salary, max_salary)
+    return salary
 
 
 def predict_salary(salary_from: int, salary_to: int):
