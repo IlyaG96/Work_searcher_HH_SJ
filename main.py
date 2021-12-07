@@ -1,40 +1,21 @@
 import os
-import sys
 from dotenv import load_dotenv
 from terminaltables import AsciiTable
 from superjob import generate_vacancies_data_sj
 from headhunter import generate_vacancies_data_hh
 
 
-def fetch_vacancies(languages: list,
-                    sjob_token: str
-                    ):
+def made_table(vacancy: dict, table_headers: list, table_title: str):
 
-    try:
-        vacancies = [
-            generate_vacancies_data_sj(languages, sjob_token),
-            generate_vacancies_data_hh(languages)
-        ]
-    except ZeroDivisionError:
-        sys.exit("Попробуйте чуть позже или уменьшите количество языков в .env. Ошибка может быть"
-                 " связана с ограничением на количество запросов сайта superjob.ru")
+    table_data = table_headers[:]
 
-    return vacancies
+    for language, params in vacancy.items():
+        language_stats = list(params.values())
+        language_stats.insert(0, language)
+        table_data.append(language_stats)
+    table_instance = AsciiTable(table_data, table_title)
 
-
-def print_table(vacancies: list,
-                table_headers: list,
-                table_titles: list
-                ):
-
-    for num, vacancies_data in enumerate(vacancies):
-        table_data = table_headers[:]
-        for language, params in vacancies_data.items():
-            stat = list(params.values())
-            stat.insert(0, language)
-            table_data.append(stat)
-        table_instance = AsciiTable(table_data, table_titles[num])
-        print(table_instance.table)
+    return table_instance.table
 
 
 def main():
@@ -42,10 +23,15 @@ def main():
     load_dotenv()
     sjob_token = os.getenv("SJOB_TOKEN")
     languages = os.getenv("LANGUAGES").split()
-    table_headers = [["Язык программирования", "Вакансий обработано", "Вакансий найдено", "Средняя зарплата"]]
+    table_headers = [["Язык программирования", "Вакансий найдено", "Вакансий обработано" , "Средняя зарплата"]]
     table_titles = ["SuperJob, Moscow", "HeadHunter, Moscow"]
-    vacancies = fetch_vacancies(languages, sjob_token)
-    print_table(vacancies, table_headers, table_titles)
+
+    vacancies = [
+        generate_vacancies_data_sj(languages, sjob_token),
+        generate_vacancies_data_hh(languages)
+    ]
+    for title, vacancy in enumerate(vacancies):
+        print(made_table(vacancy, table_headers, table_titles[title]))
 
 
 if __name__ == "__main__":
