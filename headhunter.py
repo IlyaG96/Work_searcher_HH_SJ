@@ -5,12 +5,14 @@ from itertools import count
 
 def get_vacancies_hh(language: str, page: int):
 
+    moscow_area = 1
+
     headers = {
         "User-Agent": "api-test-agent"
     }
     payload = {
         "text": language,
-        "area": 1,
+        "area": moscow_area,
         "per_page": 100,
         "page": page
     }
