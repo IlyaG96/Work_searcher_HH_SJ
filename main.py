@@ -5,7 +5,7 @@ from superjob import process_sj_vacancies
 from headhunter import process_hh_vacancies
 
 
-def made_table(vacancy: dict, table_headers: list, table_title: str):
+def make_table(vacancy: dict, table_headers: list, table_title: str):
 
     table_content = table_headers[:]
 
@@ -32,7 +32,7 @@ def main():
     ]
 
     for title, vacancy in enumerate(vacancies):
-        print(made_table(vacancy, table_headers, table_titles[title]))
+        print(make_table(vacancy, table_headers, table_titles[title]))
 
 
 if __name__ == "__main__":

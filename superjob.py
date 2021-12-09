@@ -3,7 +3,7 @@ from salaries import predict_rub_salary_sj, count_sum_salary_and_processed_vacan
 from itertools import count
 
 
-def get_response_sj(language: str, sjob_token: str, page: int):
+def get_response(language: str, sjob_token: str, page: int):
 
     headers = {
         "X-Api-App-Id": sjob_token,
@@ -29,10 +29,10 @@ def process_sj_vacancies(languages: list, sjob_token: str):
         total_sum_salary = 0
         total_vacancies_processed = 0
         for page in count():
-            sj_response = get_response_sj(language, sjob_token, page)
-            more_vacancies = sj_response["more"]
-            vacancies = sj_response["objects"]
-            vacancies_found = sj_response["total"]
+            response = get_response(language, sjob_token, page)
+            more_vacancies = response["more"]
+            vacancies = response["objects"]
+            vacancies_found = response["total"]
 
             sum_salary, processed_vacancies =\
                 count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_sj)

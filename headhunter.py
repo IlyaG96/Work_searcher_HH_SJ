@@ -3,7 +3,7 @@ from salaries import predict_rub_salary_hh, count_sum_salary_and_processed_vacan
 from itertools import count
 
 
-def get_vacancies_hh(language: str, page: int):
+def get_vacancies(language: str, page: int):
 
     moscow_area = 1
 
@@ -32,10 +32,10 @@ def process_hh_vacancies(languages: list):
         total_sum_salary = 0
         total_vacancies_processed = 0
         for page in count():
-            hh_response = get_vacancies_hh(language, page)
-            vacancies = hh_response["items"]
-            vacancies_found = hh_response["found"]
-            total_pages = hh_response["pages"]
+            response = get_vacancies(language, page)
+            vacancies = response["items"]
+            vacancies_found = response["found"]
+            total_pages = response["pages"]
             sum_salary, vacancies_processed = \
                 count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_hh)
 
