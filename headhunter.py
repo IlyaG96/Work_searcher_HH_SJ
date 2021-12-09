@@ -33,9 +33,9 @@ def process_hh_vacancies(languages: list):
         total_vacancies_processed = 0
         for page in count():
             hh_response = get_vacancies_hh(language, page)
-            vacancies = hh_response.get("items")
-            vacancies_found = hh_response.get("found")
-            total_pages = hh_response.get("pages")
+            vacancies = hh_response["items"]
+            vacancies_found = hh_response["found"]
+            total_pages = hh_response["pages"]
             sum_salary, vacancies_processed = \
                 count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_hh)
 

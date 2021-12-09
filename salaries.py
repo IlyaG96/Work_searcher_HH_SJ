@@ -1,8 +1,8 @@
 def predict_rub_salary_hh(vacancy: dict):
 
-    if vacancy.get("salary") and vacancy.get("salary").get("currency") == "RUR":
-        min_salary = vacancy.get("salary").get("from")
-        max_salary = vacancy.get("salary").get("to")
+    if vacancy.get("salary") and vacancy["salary"]["currency"] == "RUR":
+        min_salary = vacancy["salary"]["from"]
+        max_salary = vacancy["salary"]["to"]
         salary = count_salary(min_salary, max_salary)
         return salary
     return None
@@ -10,11 +10,11 @@ def predict_rub_salary_hh(vacancy: dict):
 
 def predict_rub_salary_sj(vacancy: dict):
 
-    min_salary = vacancy.get("payment_from")
-    max_salary = vacancy.get("payment_to")
-
     if not vacancy.get("currency") == "rub":
         return None
+
+    min_salary = vacancy.get("payment_from")
+    max_salary = vacancy.get("payment_to")
 
     salary = count_salary(min_salary, max_salary)
     return salary
