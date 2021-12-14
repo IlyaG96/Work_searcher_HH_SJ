@@ -22,32 +22,38 @@ def get_response(language: str, sjob_token: str, page: int):
     return sj_response
 
 
+def process_language(language: str, sjob_token: str):
+    total_sum_salary = 0
+    total_vacancies_processed = 0
+    for page in count():
+        response = get_response(language, sjob_token, page)
+        more_vacancies = response["more"]
+        vacancies = response["objects"]
+        vacancies_found = response["total"]
+
+        sum_salary, processed_vacancies = \
+            count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_sj)
+
+        total_sum_salary += sum_salary
+        total_vacancies_processed += processed_vacancies
+
+        if not more_vacancies:
+            break
+
+    language_statistics = {
+        "vacancies_found": vacancies_found,
+        "vacancies_processed": total_vacancies_processed,
+        "average_salary": int(total_sum_salary/total_vacancies_processed)
+    }
+
+    return language_statistics
+
+
 def process_sj_vacancies(languages: list, sjob_token: str):
 
     vacancies_payments = {}
     for language in languages:
-        total_sum_salary = 0
-        total_vacancies_processed = 0
-        for page in count():
-            response = get_response(language, sjob_token, page)
-            more_vacancies = response["more"]
-            vacancies = response["objects"]
-            vacancies_found = response["total"]
-
-            sum_salary, processed_vacancies =\
-                count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_sj)
-
-            total_sum_salary += sum_salary
-            total_vacancies_processed += processed_vacancies
-
-            if not more_vacancies:
-                break
-
-        vacancies_payments.update({
-            language: {
-                "vacancies_found": vacancies_found,
-                "vacancies_processed": total_vacancies_processed,
-                "average_salary": int(total_sum_salary/total_vacancies_processed)}
-        })
+        language_statistics = process_language(language, sjob_token)
+        vacancies_payments.update({language: language_statistics})
 
     return vacancies_payments

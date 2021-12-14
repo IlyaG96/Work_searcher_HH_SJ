@@ -24,32 +24,38 @@ def get_vacancies(language: str, page: int):
     return vacancies
 
 
+def process_language(language):
+
+    total_sum_salary = 0
+    total_vacancies_processed = 0
+    for page in count():
+        response = get_vacancies(language, page)
+        vacancies = response["items"]
+        vacancies_found = response["found"]
+        total_pages = response["pages"]
+        sum_salary, vacancies_processed = \
+            count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_hh)
+
+        total_sum_salary += sum_salary
+        total_vacancies_processed += vacancies_processed
+
+        if page >= total_pages-1:
+            break
+
+    language_statistics = {
+        "vacancies_found": vacancies_found,
+        "vacancies_processed": total_vacancies_processed,
+        "average_salary": int(total_sum_salary/total_vacancies_processed)
+    }
+
+    return language_statistics
+
+
 def process_hh_vacancies(languages: list):
 
     vacancies_payments = {}
 
     for language in languages:
-        total_sum_salary = 0
-        total_vacancies_processed = 0
-        for page in count():
-            response = get_vacancies(language, page)
-            vacancies = response["items"]
-            vacancies_found = response["found"]
-            total_pages = response["pages"]
-            sum_salary, vacancies_processed = \
-                count_sum_salary_and_processed_vacancies(vacancies, predict_rub_salary_hh)
-
-            total_sum_salary += sum_salary
-            total_vacancies_processed += vacancies_processed
-
-            if page >= total_pages-1:
-                break
-
-        vacancies_payments.update({
-            language: {
-                "vacancies_found": vacancies_found,
-                "vacancies_processed": total_vacancies_processed,
-                "average_salary": int(total_sum_salary/total_vacancies_processed)}
-        })
-
+        language_statistics = process_language(language)
+        vacancies_payments.update({language: language_statistics})
     return vacancies_payments
