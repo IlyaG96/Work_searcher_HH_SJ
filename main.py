@@ -31,8 +31,8 @@ def main():
         process_hh_vacancies(languages)
     ]
 
-    for title, vacancy in enumerate(vacancies):
-        print(make_table(vacancy, table_headers, table_titles[title]))
+    for vacancy, table_title in zip(vacancies, table_titles):
+        print(make_table(vacancy, table_headers, table_title))
 
 
 if __name__ == "__main__":
